@@ -1,0 +1,145 @@
+import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { IoSettingsOutline, IoCameraOutline } from "react-icons/io5";
+
+// === SettingsMenu Component ===
+const SettingsMenu = ({ activeTab, setActiveTab }) => {
+  const tabs = [
+    { id: "vision", label: "Vision" },
+    { id: "device", label: "Device" },
+  ];
+
+  const tabStyles = (isActive) =>
+    `text-sm font-medium px-4 py-2 rounded-md transition ${
+      isActive
+        ? "bg-gray-100 text-gray-900"
+        : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+    }`;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.2 }}
+      className="absolute right-0 mt-2 w-[320px] bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden z-50"
+    >
+      {/* Tabs */}
+      <div className="flex border-b border-gray-200 p-2">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={tabStyles(activeTab === tab.id)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Content */}
+      <div className="p-4 text-sm text-gray-700">
+        {activeTab === "vision" && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="space-y-2"
+          >
+            {["Easy", "Medium", "Hard"].map((level) => (
+              <button
+                key={level}
+                className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 transition"
+              >
+                {level}
+              </button>
+            ))}
+          </motion.div>
+        )}
+
+        {activeTab === "device" && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="space-y-5"
+          >
+            {/* CSS Toggle */}
+            <div>
+              <label className="block mb-1 text-gray-600">Enable CSS</label>
+              <div className="flex gap-2">
+                <button className="flex-1 px-3 py-1 rounded-md border hover:bg-gray-50 transition">
+                  Enabled
+                </button>
+                <button className="flex-1 px-3 py-1 rounded-md border hover:bg-gray-50 transition">
+                  Disabled
+                </button>
+              </div>
+            </div>
+
+            {/* JS Toggle */}
+            <div>
+              <label className="block mb-1 text-gray-600">Enable JS</label>
+              <div className="flex gap-2">
+                <button className="flex-1 px-3 py-1 rounded-md border hover:bg-gray-50 transition">
+                  Enabled
+                </button>
+                <button className="flex-1 px-3 py-1 rounded-md border hover:bg-gray-50 transition">
+                  Disabled
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </motion.div>
+  );
+};
+
+// === Tools Component ===
+const Tools = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("vision");
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="flex justify-end w-full">
+      <div className="flex items-center gap-2 relative">
+        {/* Settings Button */}
+        <div className="relative" ref={menuRef}>
+          <button
+            className="flex items-center justify-center h-full"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-label="Settings"
+          >
+            <IoSettingsOutline className="text-[18px] text-gray-700" />
+          </button>
+
+          <AnimatePresence>
+            {menuOpen && (
+              <SettingsMenu activeTab={activeTab} setActiveTab={setActiveTab} />
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Camera Button */}
+        <button
+          className="flex items-center justify-center h-full"
+          aria-label="Screenshot"
+        >
+          <IoCameraOutline className="text-[18px] text-gray-700" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Tools;

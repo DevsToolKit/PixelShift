@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useState } from "react";
 
 const ToolsContext = createContext();
 
@@ -7,7 +7,7 @@ const initialState = {
   listOfActiveDevices: [],
   isDevConsoleActive: false,
   dashboardLayout: "vertical",
-  zoomPercent: 100,
+  resizePercentage: 100,
 };
 
 const toolsReducer = (state, action) => {
@@ -21,7 +21,7 @@ const toolsReducer = (state, action) => {
     case "SET_LAYOUT":
       return { ...state, dashboardLayout: action.payload };
     case "SET_ZOOM":
-      return { ...state, zoomPercent: action.payload };
+      return { ...state, resizePercentage: action.payload };
     default:
       return state;
   }

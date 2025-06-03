@@ -14,8 +14,12 @@ function Header() {
   const { toolsState, dispatch } = useContext(ToolsContext);
 
   const checkForSSL = (url) => {
-    const httpsRegex = /^https?:\/\//;
-    return httpsRegex.test(url);
+    try {
+      const parsedUrl = new URL(url);
+      return parsedUrl.protocol === "https:";
+    } catch {
+      return false;
+    }
   };
 
   return (
