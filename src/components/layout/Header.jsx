@@ -7,6 +7,8 @@ import { ToolsContext } from "../../context/ToolsContext";
 import { PiMouseScroll } from "react-icons/pi";
 import { BsLaptop } from "react-icons/bs";
 import { CgCloseO } from "react-icons/cg";
+import { LuGalleryHorizontalEnd } from "react-icons/lu";
+
 import SelectedDeviceButton from "../headerComponents/SelectedDeviceButton";
 
 function Header() {
@@ -47,6 +49,19 @@ const HeaderTools = ({ toolsState, dispatch }) => {
         tooltip="Toggle Sync Scroll"
       />
       <SelectedDeviceButton />
+      <HeaderButton
+        icon={
+          <LuGalleryHorizontalEnd
+            size={20}
+            className={`${
+              toolsState.isVerticalOrientation ? "rotate-[-90deg]" : ""
+            } transition-transform duration-200`}
+          />
+        }
+        onClick={() => dispatch({ type: "TOGGLE_LAYOUT" })}
+        isActive={toolsState.isVerticalOrientation}
+        tooltip="Toggle orientation"
+      />
       <HeaderButton
         icon={<BsLaptop size={20} />}
         tooltip="Toggle Dev Console"

@@ -1,4 +1,11 @@
-import React, { useContext, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Renderer from "./Renderer";
 import { AppContext } from "../../context/AppContext";
 import { ToolsContext } from "../../context/ToolsContext";
@@ -7,21 +14,33 @@ import Tools from "./Tools";
 
 function DeviceContainer() {
   const { selectedDevices, url } = useContext(AppContext);
-  const { resizePercentage } = useTools();
+  const { resizePercentage, isVerticalOrientation, isSyncActive } = useTools();
 
   const scale = useMemo(() => resizePercentage / 100, [resizePercentage]);
   const [deviceDimensions, setDeviceDimensions] = useState({});
   const iframeRefs = useRef({});
   const [visionDifficulties, setVisionDifficulties] = useState({});
 
-  //   TODO: Move this to context
-  const [verticalOrientation, setVerticalOrientation] = useState(false);
+  const handleScrollSync = useCallback(
+    (scrolledDeviceId, scrollTop, scrollLeft) => {
+      if (!isSyncActive) return;
+
+      Object.entries(iframeRefs.current).forEach(([deviceId, iframeRef]) => {
+        if (deviceId !== scrolledDeviceId && iframeRef?.contentWindow) {
+          const iframeDoc = iframeRef.contentWindow.document;
+          iframeDoc.documentElement.scrollTo(scrollLeft, scrollTop);
+        }
+      });
+    },
+    [isSyncActive]
+  );
+
   return (
     <div className="flex w-full h-full overflow-auto">
       <div
-        className={`w-full flex ${
-          verticalOrientation ? "flex-col" : ""
-        } flex-wrap gap-5 p-4 pb-10 h-full scroll-container`}
+        className={`w-full flex flex-wrap gap-5 p-4 pb-10 h-full scroll-container ${
+          isVerticalOrientation ? "flex-col" : ""
+        }`}
       >
         {selectedDevices.length === 0 && (
           <div className="w-full h-full flex justify-center items-center">
@@ -53,6 +72,9 @@ function DeviceContainer() {
                   scale={scale}
                   iframeRef={(ref) => (iframeRefs.current[device.id] = ref)}
                   url={url}
+                  onScroll={(scrollTop, scrollLeft) =>
+                    handleScrollSync(device.id, scrollTop, scrollLeft)
+                  }
                 />
               </div>
             </div>

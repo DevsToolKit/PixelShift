@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { setupIframeListeners } from "../../utils/iframeUtils";
 
-function Renderer({ device, scale, iframeRef, url }) {
+function Renderer({ device, scale, iframeRef, url, onScroll }) {
   const [iframeSrc, setIframeSrc] = useState("");
   const containerRef = useRef(null);
   const iframeInternalRef = useRef(null);
@@ -12,6 +13,17 @@ function Renderer({ device, scale, iframeRef, url }) {
       setIframeSrc("");
     }
   }, [url]);
+
+  useEffect(() => {
+    const iframe = iframeInternalRef.current;
+    const cleanup = setupIframeListeners(
+      iframe,
+      onScroll
+      // onClick,
+      // visionDifficulty
+    );
+    return cleanup;
+  }, [onScroll]);
 
   return (
     <div

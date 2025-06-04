@@ -9,7 +9,7 @@ export const useTools = () => {
     isSyncActive: toolsState.isSyncActive,
     listOfActiveDevices: toolsState.listOfActiveDevices,
     isDevConsoleActive: toolsState.isDevConsoleActive,
-    dashboardLayout: toolsState.dashboardLayout,
+    isVerticalOrientation: toolsState.isVerticalOrientation,
     dispatch,
   };
 };

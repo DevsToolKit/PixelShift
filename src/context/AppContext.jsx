@@ -26,7 +26,7 @@ const AppContextProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    const URL = isDev ? "https://example.com/" : window.location.href;
+    const URL = isDev ? "http://localhost:5173/test" : window.location.href;
     setUrl(URL);
   }, []);
 
