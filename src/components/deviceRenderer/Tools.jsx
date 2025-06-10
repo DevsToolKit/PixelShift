@@ -1,9 +1,61 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoSettingsOutline, IoCameraOutline } from "react-icons/io5";
+import { VISION_DIFFICULTY_SETTINGS } from "../../utils/visionStyles";
+
+const Tools = ({ setVisionDifficulty }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("vision");
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="flex justify-end w-full">
+      <div className="flex items-center gap-2 relative">
+        {/* Settings Button */}
+        <div className="relative" ref={menuRef}>
+          <button
+            className="flex items-center justify-center h-full"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-label="Settings"
+          >
+            <IoSettingsOutline className="text-[18px] text-gray-700" />
+          </button>
+
+          <AnimatePresence>
+            {menuOpen && (
+              <SettingsMenu
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                setVisionDifficulty={setVisionDifficulty}
+              />
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Camera Button */}
+        <button
+          className="flex items-center justify-center h-full"
+          aria-label="Screenshot"
+        >
+          <IoCameraOutline className="text-[18px] text-gray-700" />
+        </button>
+      </div>
+    </div>
+  );
+};
 
 // === SettingsMenu Component ===
-const SettingsMenu = ({ activeTab, setActiveTab }) => {
+const SettingsMenu = ({ activeTab, setActiveTab, setVisionDifficulty }) => {
   const tabs = [
     { id: "vision", label: "Vision" },
     { id: "device", label: "Device" },
@@ -15,6 +67,12 @@ const SettingsMenu = ({ activeTab, setActiveTab }) => {
         ? "bg-gray-100 text-gray-900"
         : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
     }`;
+
+  const handleMenuItemClick = (settingId) => {
+    setVisionDifficulty(settingId);
+    // You might also want to close the menu here if desired:
+    // setMenuOpen(false); // This would require setMenuOpen to be passed down as a prop
+  };
 
   return (
     <motion.div
@@ -45,12 +103,16 @@ const SettingsMenu = ({ activeTab, setActiveTab }) => {
             animate={{ opacity: 1 }}
             className="space-y-2"
           >
-            {["Easy", "Medium", "Hard"].map((level) => (
+            {VISION_DIFFICULTY_SETTINGS.map((setting) => (
               <button
-                key={level}
-                className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 transition"
+                key={setting.id}
+                className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 transition cursor-pointer"
+                // onClick={() => handleMenuItemClick(setting.id)}
+                onClick={() => {
+                  handleMenuItemClick(setting.id);
+                }}
               >
-                {level}
+                {setting.name}
               </button>
             ))}
           </motion.div>
@@ -93,53 +155,6 @@ const SettingsMenu = ({ activeTab, setActiveTab }) => {
     </motion.div>
   );
 };
-
 // === Tools Component ===
-const Tools = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("vision");
-  const menuRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  return (
-    <div className="flex justify-end w-full">
-      <div className="flex items-center gap-2 relative">
-        {/* Settings Button */}
-        <div className="relative" ref={menuRef}>
-          <button
-            className="flex items-center justify-center h-full"
-            onClick={() => setMenuOpen((prev) => !prev)}
-            aria-label="Settings"
-          >
-            <IoSettingsOutline className="text-[18px] text-gray-700" />
-          </button>
-
-          <AnimatePresence>
-            {menuOpen && (
-              <SettingsMenu activeTab={activeTab} setActiveTab={setActiveTab} />
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Camera Button */}
-        <button
-          className="flex items-center justify-center h-full"
-          aria-label="Screenshot"
-        >
-          <IoCameraOutline className="text-[18px] text-gray-700" />
-        </button>
-      </div>
-    </div>
-  );
-};
 
 export default Tools;
