@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { IoSettingsOutline, IoCameraOutline } from "react-icons/io5";
 import { VISION_DIFFICULTY_SETTINGS } from "../../utils/visionStyles";
 
-const Tools = ({ setVisionDifficulty }) => {
+const Tools = ({ setVisionDifficulty, device }) => {
+  console.log(device);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("vision");
   const menuRef = useRef(null);
@@ -24,7 +25,7 @@ const Tools = ({ setVisionDifficulty }) => {
         {/* Settings Button */}
         <div className="relative" ref={menuRef}>
           <button
-            className="flex items-center justify-center h-full"
+            className="flex items-center justify-center h-full cursor-pointer"
             onClick={() => setMenuOpen((prev) => !prev)}
             aria-label="Settings"
           >
@@ -37,6 +38,7 @@ const Tools = ({ setVisionDifficulty }) => {
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
                 setVisionDifficulty={setVisionDifficulty}
+                setMenuOpen={setMenuOpen}
               />
             )}
           </AnimatePresence>
@@ -55,14 +57,19 @@ const Tools = ({ setVisionDifficulty }) => {
 };
 
 // === SettingsMenu Component ===
-const SettingsMenu = ({ activeTab, setActiveTab, setVisionDifficulty }) => {
+const SettingsMenu = ({
+  activeTab,
+  setActiveTab,
+  setVisionDifficulty,
+  setMenuOpen,
+}) => {
   const tabs = [
     { id: "vision", label: "Vision" },
     { id: "device", label: "Device" },
   ];
 
   const tabStyles = (isActive) =>
-    `text-sm font-medium px-4 py-2 rounded-md transition ${
+    `text-sm font-medium px-4 py-2 rounded-md transition cursor-pointer mr-1 ${
       isActive
         ? "bg-gray-100 text-gray-900"
         : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
@@ -70,8 +77,7 @@ const SettingsMenu = ({ activeTab, setActiveTab, setVisionDifficulty }) => {
 
   const handleMenuItemClick = (settingId) => {
     setVisionDifficulty(settingId);
-    // You might also want to close the menu here if desired:
-    // setMenuOpen(false); // This would require setMenuOpen to be passed down as a prop
+    setMenuOpen(false); // This would require setMenuOpen to be passed down as a prop
   };
 
   return (
@@ -128,10 +134,14 @@ const SettingsMenu = ({ activeTab, setActiveTab, setVisionDifficulty }) => {
             <div>
               <label className="block mb-1 text-gray-600">Enable CSS</label>
               <div className="flex gap-2">
-                <button className="flex-1 px-3 py-1 rounded-md border hover:bg-gray-50 transition">
+                <button
+                  className={`flex-1 px-3 py-1 rounded-md border hover:bg-gray-50 transition `}
+                >
                   Enabled
                 </button>
-                <button className="flex-1 px-3 py-1 rounded-md border hover:bg-gray-50 transition">
+                <button
+                  className={`flex-1 px-3 py-1 rounded-md border hover:bg-gray-50 transition`}
+                >
                   Disabled
                 </button>
               </div>
@@ -141,10 +151,14 @@ const SettingsMenu = ({ activeTab, setActiveTab, setVisionDifficulty }) => {
             <div>
               <label className="block mb-1 text-gray-600">Enable JS</label>
               <div className="flex gap-2">
-                <button className="flex-1 px-3 py-1 rounded-md border hover:bg-gray-50 transition">
+                <button
+                  className={`flex-1 px-3 py-1 rounded-md border hover:bg-gray-50 transition`}
+                >
                   Enabled
                 </button>
-                <button className="flex-1 px-3 py-1 rounded-md border hover:bg-gray-50 transition">
+                <button
+                  className={`flex-1 px-3 py-1 rounded-md border hover:bg-gray-50 transition`}
+                >
                   Disabled
                 </button>
               </div>

@@ -40,6 +40,10 @@ function Header() {
 }
 
 const HeaderTools = ({ toolsState, dispatch }) => {
+  const handleResizeChange = (event) => {
+    dispatch({ type: "SET_RESIZE_PERCENTAGE", payload: event.target.value });
+  };
+
   return (
     <div className="flex gap-1">
       <HeaderButton
@@ -54,7 +58,7 @@ const HeaderTools = ({ toolsState, dispatch }) => {
           <LuGalleryHorizontalEnd
             size={20}
             className={`${
-              toolsState.isVerticalOrientation ? "rotate-[-90deg]" : ""
+              !toolsState.isVerticalOrientation ? "rotate-[-90deg]" : ""
             } transition-transform duration-200`}
           />
         }
@@ -68,6 +72,19 @@ const HeaderTools = ({ toolsState, dispatch }) => {
         isActive={toolsState.isDevConsoleActive}
         onClick={() => dispatch({ type: "TOGGLE_DEV_CONSOLE" })}
       />
+      <div className="flex items-center gap-2">
+        <input
+          type="range"
+          min="50"
+          max="100"
+          step="5"
+          className="w-20 h-2 bg-gray-300 rounded-full"
+          style={{ outline: "none" }}
+          value={toolsState.resizePercentage}
+          onChange={handleResizeChange}
+        />
+        <span>{toolsState.resizePercentage}%</span>
+      </div>
       <HeaderButton
         variant="danger"
         icon={<CgCloseO size={20} />}

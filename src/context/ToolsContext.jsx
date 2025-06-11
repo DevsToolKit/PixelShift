@@ -6,7 +6,7 @@ const initialState = {
   isSyncActive: false,
   listOfActiveDevices: [],
   isDevConsoleActive: false,
-  isVerticalOrientation: true,
+  isVerticalOrientation: false,
   resizePercentage: 100,
 };
 
@@ -20,7 +20,7 @@ const toolsReducer = (state, action) => {
       return { ...state, isDevConsoleActive: !state.isDevConsoleActive };
     case "TOGGLE_LAYOUT":
       return { ...state, isVerticalOrientation: !state.isVerticalOrientation };
-    case "SET_ZOOM":
+    case "SET_RESIZE_PERCENTAGE":
       return { ...state, resizePercentage: action.payload };
     default:
       return state;

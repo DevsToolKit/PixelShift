@@ -13,6 +13,9 @@ function SelectedDeviceButton() {
   const { selectedDevices, setShowAddDeviceModal, removeDevice } =
     useContext(AppContext);
 
+  const selectedDevicesCount = () =>
+    selectedDevices.length > 9 ? "9+" : selectedDevices.length;
+
   useEffect(() => {
     if (isOpen && buttonRef.current) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
@@ -53,7 +56,7 @@ function SelectedDeviceButton() {
           onClick={() => setIsOpen((prev) => !prev)}
         />
         <span className="absolute top-[5px] right-[5px] bg-red-500 text-white text-[10px] w-[15px] h-[15px] flex justify-center items-center rounded-full">
-          {selectedDevices.length}
+          {selectedDevicesCount()}
         </span>
       </div>
 
