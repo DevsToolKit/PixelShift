@@ -32,10 +32,6 @@ function Renderer({
     return cleanup;
   }, [onScroll, visionDifficulty]);
 
-  useEffect(() => {
-    console.log(visionDifficulty);
-  }, [visionDifficulty]);
-
   return (
     <div
       ref={containerRef}

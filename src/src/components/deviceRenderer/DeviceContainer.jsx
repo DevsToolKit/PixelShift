@@ -63,9 +63,9 @@ function DeviceContainer() {
         return;
       }
 
-      console.log(
-        `Taking ${type === "viewport" ? "viewport" : "full"} screenshot for: ${device.name}`
-      );
+      // console.log(
+      //   `Taking ${type === "viewport" ? "viewport" : "full"} screenshot for: ${device.name}`
+      // );
 
       if (type === "viewport") {
         await takeViewportScreenshot(iframeRef, device);

@@ -82,7 +82,7 @@ const Tools = ({ setVisionDifficulty, device, takeScreenshot }) => {
                     takeScreenshot("viewport");
                     setScreenshotDropdownOpen(false);
                   }}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md text-[14px] cursor-pointer"
+                  className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 transition cursor-pointer text-[14px]"
                 >
                   Viewport Screenshot
                 </button>
@@ -91,7 +91,7 @@ const Tools = ({ setVisionDifficulty, device, takeScreenshot }) => {
                     takeScreenshot("full");
                     setScreenshotDropdownOpen(false);
                   }}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md text-[14px] cursor-pointer"
+                  className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 transition cursor-pointer text-[14px]"
                 >
                   Full Screenshot
                 </button>
@@ -113,7 +113,7 @@ const SettingsMenu = ({
 }) => {
   const tabs = [
     { id: "vision", label: "Vision" },
-    { id: "device", label: "Device" },
+    // { id: "device", label: "Device" },
   ];
 
   const tabStyles = (isActive) =>
@@ -128,9 +128,9 @@ const SettingsMenu = ({
     setMenuOpen(false);
   };
 
-  const logSettingClick = (settingType, value) => {
-    console.log(`${settingType} toggled to: ${value}`);
-  };
+  // const logSettingClick = (settingType, value) => {
+  //   console.log(`${settingType} toggled to: ${value}`);
+  // };
 
   return (
     <motion.div
