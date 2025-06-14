@@ -1,7 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
-import { FaLock, FaUnlock } from "react-icons/fa";
+import { FaLock, FaUnlock, FaGithub } from "react-icons/fa";
 import HeaderButton from "../ui/HeaderButton";
 import { ToolsContext } from "../../context/ToolsContext";
 import { PiMouseScroll } from "react-icons/pi";
@@ -66,13 +66,13 @@ const HeaderTools = ({ toolsState, dispatch }) => {
         isActive={toolsState.isVerticalOrientation}
         tooltip="Toggle orientation"
       />
-      <HeaderButton
+      {/* <HeaderButton
         icon={<BsLaptop size={20} />}
         tooltip="Toggle Dev Console"
         isActive={toolsState.isDevConsoleActive}
         onClick={() => dispatch({ type: "TOGGLE_DEV_CONSOLE" })}
-      />
-      <div className="flex items-center gap-2">
+      /> */}
+      <div className="flex items-center gap-2 mr-2">
         <input
           type="range"
           min="50"
@@ -85,6 +85,17 @@ const HeaderTools = ({ toolsState, dispatch }) => {
         />
         <span>{toolsState.resizePercentage}%</span>
       </div>
+      <HeaderButton
+        icon={<FaGithub size={20} />}
+        onClick={() =>
+          window.open(
+            "https://github.com/DevsToolKit/PixelShift",
+            "_blank",
+            "noopener,noreferrer"
+          )
+        }
+        tooltip="Contribute on GitHub"
+      />
       <HeaderButton
         variant="danger"
         icon={<CgCloseO size={20} />}

@@ -65,7 +65,7 @@ const SettingsMenu = ({
 }) => {
   const tabs = [
     { id: "vision", label: "Vision" },
-    { id: "device", label: "Device" },
+    // { id: "device", label: "Device" },
   ];
 
   const tabStyles = (isActive) =>
