@@ -20,6 +20,7 @@ const AppContextProvider = ({ children }) => {
       acc[device.id] = {
         isCSSEnabled: true,
         isJSEnabled: true,
+        visionDifficulty: "default",
       };
       return acc;
     }, {})
