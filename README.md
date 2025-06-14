@@ -9,12 +9,12 @@
 <p align="center">
   <!-- GitHub Stars -->
   <a href="https://github.com/DevsToolKit/PixelShift/stargazers">
-    <img alt="GitHub stars" src="https://img.shields.io/github/stars/DevsToolKit/PixelShift?style=for-the-badge&color=ffd700&label=Stars">
+    <img alt="GitHub stars" src="https://img.shields.io/github/stars/DevsToolKit/PixelShift?style=for-the-badge&cacheSeconds=3600">
   </a>
   
   <!-- GitHub Forks -->
   <a href="https://github.com/DevsToolKit/PixelShift/fork">
-    <img alt="GitHub forks" src="https://img.shields.io/github/forks/DevsToolKit/PixelShift?style=for-the-badge&color=ffb86c&label=Forks">
+    <img alt="GitHub forks" src="https://img.shields.io/github/forks/DevsToolKit/PixelShift?style=for-the-badge&color=ffb86c&label=Forks&cacheSeconds=3600">
   </a>
 
   <!-- Issues -->
@@ -29,7 +29,7 @@
 
   <!-- MIT License -->
   <a href="https://opensource.org/licenses/MIT">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/DevsToolKit/PixelShift?style=for-the-badge&color=ff79c6">
+    <img alt="Platform" src="https://img.shields.io/badge/lisence-MIT-29ABE2?style=for-the-badge" />
   </a>
 
   <!-- Last Commit -->
